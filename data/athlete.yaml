@@ -1,0 +1,25 @@
+openapi: 3.0.3
+components:
+  schemas:
+    athlete_profiles:
+      type: object
+      properties:
+        maid:
+          type: number
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        gender:
+          type: string
+        city:
+          type: string
+        state: 
+          type: string
+        created: 
+          type: string
+          format: date-time
+        score: 
+          type: number

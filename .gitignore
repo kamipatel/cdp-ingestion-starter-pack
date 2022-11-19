@@ -1,0 +1,24 @@
+*.js
+!jest.config.js
+*.d.ts
+node_modules
+
+# CDK asset staging directory
+.cdk.staging
+cdk.out
+
+util
+Kam.md
+pub
+sh
+upload
+spark
+backup
+
+src/__pycache__
+test/.ipynb_checkpoints
+.ipynb_checkpoints
+
+query-notebook.ipynb
+
+test/ingest_test_kam.py

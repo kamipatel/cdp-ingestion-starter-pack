@@ -16,7 +16,7 @@ def enrich_cdp_data(df):
         df["score"] = 10
         df.loc[df.state__c == "TX", "score"] = 8
         df.loc[df.state__c == "hanoi", "score"] = 7
-        df.drop(['datasourceobject__c', 'datasource__c'], axis=1, inplace=True)
+        df.drop(['datasourceobject__c', 'datasource__c'], axis=1, inplace=True, errors='ignore')
                 
         print('***Enrich end')
         return df

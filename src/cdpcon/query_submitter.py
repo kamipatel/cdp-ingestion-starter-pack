@@ -78,7 +78,6 @@ class QuerySubmitter:
         response_json = sql_response.json()
         return response_json
 
-    @staticmethod
     def _get_next_batch_results(next_batch_id, instance_url, token, enable_arrow_stream=False):
         url = f'https://{instance_url}/api/v2/query/{next_batch_id}'
         headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
@@ -96,7 +95,6 @@ class QuerySubmitter:
                 raise Error('Failed executing query in server')
         return response_json
 
-    @staticmethod
     def _get_headers(token, enable_arrow_stream):
         headers = {QUERY_HEADER_KEY_AUTHORIZATION: f'Bearer {token}',
                    QUERY_HEADER_KEY_CONTENT_TYPE: QUERY_HEADER_VALUE_APPLICATION_JSON,
@@ -105,7 +103,6 @@ class QuerySubmitter:
             headers['enable-arrow-stream'] = 'true'
         return headers
 
-    @staticmethod
     def _get_headers_csv(token, enable_arrow_stream):
         headers = {QUERY_HEADER_KEY_AUTHORIZATION: f'Bearer {token}',
                    QUERY_HEADER_KEY_CONTENT_TYPE: QUERY_HEADER_VALUE_TEXT_CSV,
@@ -114,8 +111,6 @@ class QuerySubmitter:
             headers['enable-arrow-stream'] = 'true'
         return headers
 
-
-    @staticmethod
     def _get_payload(query):
         payload = {
             'sql': query
@@ -123,11 +118,11 @@ class QuerySubmitter:
         json_payload = json.dumps(payload)
         return json_payload
 
-    def _post_ingest_stream(query, instance_url, token, payload, sources, object, api_version='V2', enable_arrow_stream=False):
+    def _post_ingest_stream(instance_url, token, payload, sources, object, api_version='V2', enable_arrow_stream=False):
 
-        url = instance_url + "/api/v1/ingest/sources/" + sources + "/" + object + "/"
+        url = f'https://{instance_url}/api/v1/ingest/sources/{sources}/{object}'
 
-        print(url)
+        print("url=" + url)
         json_payload = json.dumps(payload)
 
         headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
@@ -135,7 +130,7 @@ class QuerySubmitter:
         print("Submitting query for execution")
         start_time = timer()
         sql_response = QuerySubmitter.session.post(url=url, data=json_payload, headers=headers, verify=False)
-        QuerySubmitter.logger.debug("Query Submitted in %s", str(timedelta(seconds=timer() - start_time)))
+        QuerySubmitter.logger.debug("_post_ingest_stream Submitted in %s", str(timedelta(seconds=timer() - start_time)))
         print(sql_response.json())
         if sql_response.status_code != 202:
             try:
@@ -143,8 +138,8 @@ class QuerySubmitter:
                 error_message = error_json['message']
             finally:
                 if error_message is not None:
-                    raise Error('Failed executing post in server : %s' % error_message)
-                raise Error('Failed executing post in server')
+                    raise Error('Failed executing _post_ingest_stream in server : %s' % error_message)
+                raise Error('Failed executing _post_ingest_stream in server')
         response_json = sql_response.json()
         return response_json
 

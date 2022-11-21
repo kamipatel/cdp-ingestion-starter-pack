@@ -1,6 +1,5 @@
 import os
 import random
-import boto3
 import pandas as pd
 from cdpcon.connection import SalesforceCDPConnection
 from cdpcon.authentication_helper import AuthenticationHelper
@@ -11,16 +10,10 @@ from datetime import datetime
 import logging
 import io
 
-session = boto3.Session()
-s3 = session.resource('s3')
+def ingest_cdp_data_stream(event, json_data):
+    print('***ingest_cdp_data_stream start')
 
-logger = logging.getLogger()
-
-def lambda_handler(event, context):
-    print('Ingest called')
     try:
-
-        ingest_bucket_name = os.environ['LOAD_DATA_BUCKET'] 
 
         ########## Step 1: Get the data ##########
         conn = SalesforceCDPConnection(
@@ -37,45 +30,16 @@ def lambda_handler(event, context):
         authenticationHelper = AuthenticationHelper(conn)
         token, instance_url = authenticationHelper.get_token()
 
-
-        # Streaming sample
-        athletes = []
-        athletes_insert_count = 5
-        for c in range(1, athletes_insert_count):
-            i = random.randrange(100, 10000, 3)
-            fname = f"fname-{i}@kam.cdp"
-            lname = f"lname-{i}@kam.cdp"
-            email = f"test-{i}@kam.cdp"
-            a = {
-            "maid":1010,
-            "first_name":fname,
-            "last_name":lname,
-            "email":email,
-            "gender":"Male",
-            "city":"austin",
-            "state":"TX",
-            "created":"2021-10-07T09:11:11.816319Z"
-            }
-            athletes.append(a)
-
-        dlo = ''
-        data = {"data": athletes}
+        data = {"data": json_data}
 
         #streaming api
-        sources = "athlete_api"
-        object = ""
-        json_payload = QuerySubmitter._post_ingest_stream(dlo, instance_url, token, data, sources, object)        
+        sources =  event['dlo_source_name']
+        object = event['dlo_name']
+        json_payload = QuerySubmitter._post_ingest_stream(instance_url, token, data, sources, object)        
         print(json_payload)
                     
-        print('Ingest Stream complete')
+        print('ingest_cdp_data_stream complete')
 
     except Exception as e: 
-        print('Ingest Stream exception: '+ str(e))
+        print('ingest_cdp_data_stream exception: '+ str(e))
     
-    return {
-        'statusCode': 200,
-        'body': json.dumps('Ingest Stream complete!')
-    }
-
-
-#lambda_handler({}, {})

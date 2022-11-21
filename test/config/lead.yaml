@@ -1,24 +1,25 @@
 openapi: 3.0.3
 components:
   schemas:
-    Lead_00DDn000000JeVG:
+    Lead_External:
       type: object
       properties:
-        Description:
+        Id:
           type: string
-        City:
+        Firstname:
           type: string
-        Country:
+        Lastname:
           type: string
         Company:
           type: string
-        Id:
+        State:
+          type: string
+        Country:
           type: string
         Email:
           type: string
-        created: 
-          type: string
-          format: date-time
+        source: 
+          type: number
         score: 
           type: number
 

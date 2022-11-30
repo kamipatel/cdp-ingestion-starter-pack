@@ -6,7 +6,7 @@ This is not an official repo. It is just for the general guidance. AWS stack in 
 > Demo use-case: Partner retrieves the athlete data from customer CDP's DLO (Data Lake Object), enriches that with a score and pushes the enriched data back to the customer CDP's DLO   
 
 ## Summary
-- This AWS stack provides a boiler plate code for calling CDP ingestion APIs. It leverages code from existing open source <a herf="https://developer.salesforce.com/docs/atlas.en-us.c360a_api.meta/c360a_api/c360a_api_python_connector.htm"> python connector </a>
+- This AWS stack provides a boiler plate code for calling CDP ingestion APIs. It leverages code from existing open source <a href="https://developer.salesforce.com/docs/atlas.en-us.c360a_api.meta/c360a_api/c360a_api_python_connector.htm"> python connector </a>
 
 ## Design consideration  
 > Supports csv format only  

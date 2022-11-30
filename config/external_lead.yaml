@@ -1,0 +1,29 @@
+openapi: 3.0.3
+components:
+  schemas:
+    External_Lead_Object:
+      type: object
+      properties:
+        Id:
+          type: string
+        first_name:
+          type: string
+        last_name:
+          type: string
+        email:
+          type: string
+        state:
+          type: string
+        country:
+          type: string
+        source: 
+          type: string
+        created: 
+          type: string
+          format: date-time
+        updated: 
+          type: string
+          format: date-time
+        score: 
+          type: number
+

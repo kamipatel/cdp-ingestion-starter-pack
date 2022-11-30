@@ -1,7 +1,7 @@
 openapi: 3.0.3
 components:
   schemas:
-    Lead_External:
+    External_Lead_Object:
       type: object
       properties:
         Id:
@@ -19,7 +19,13 @@ components:
         Email:
           type: string
         source: 
-          type: number
+          type: string
         score: 
           type: number
+        created: 
+          type: string
+          format: date-time
+        updated: 
+          type: string
+          format: date-time
 

@@ -16,6 +16,7 @@ spark
 backup
 
 src/__pycache__
+src/cdpcon/__pycache__
 test/.ipynb_checkpoints
 .ipynb_checkpoints
 

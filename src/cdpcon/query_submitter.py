@@ -122,12 +122,11 @@ class QuerySubmitter:
 
         url = f'https://{instance_url}/api/v1/ingest/sources/{sources}/{object}'
 
-        print("url=" + url)
         json_payload = json.dumps(payload)
 
         headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
-        QuerySubmitter.logger.debug("Submitting query for execution")
-        print("Submitting query for execution")
+        QuerySubmitter.logger.debug("Submitting _post_ingest_stream for execution")
+        print("Submitting _post_ingest_stream for execution")
         start_time = timer()
         sql_response = QuerySubmitter.session.post(url=url, data=json_payload, headers=headers, verify=False)
         QuerySubmitter.logger.debug("_post_ingest_stream Submitted in %s", str(timedelta(seconds=timer() - start_time)))
@@ -228,7 +227,7 @@ class QuerySubmitter:
         start_time = timer()        
         headers=headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
         sql_response = QuerySubmitter.session.get(url=url, data="", headers=headers, verify=True)
-        QuerySubmitter.logger.debug("Job data posted %s", str(timedelta(seconds=timer() - start_time)))
+        QuerySubmitter.logger.debug("_get_ingest_bulk_jobs data posted %s", str(timedelta(seconds=timer() - start_time)))
         error_message = None
         if sql_response.status_code != 200:
             try:

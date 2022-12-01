@@ -29,21 +29,19 @@ From command line:
 - cdp-ingest-data-bucket-*** Stores ingestion data for a specific customer (sent by customer's salesforce CDP). You will need a seperate bucket for each customer data. 
 
 > 4 lambda functions  
-- "query.py": Query the data from customer's DLO (Data Lake object) and store in the S3 bucket 
-- "enrich.py": Enrich the S3 bucket data (coming from customer's CDP org) and store it in a seperate folder so either customer's CDP S3 connector can pull it or use bulk API to push the data to CDP
-- "ingest_bulk.py": Push the data from the S3 bucket to the Customer's CDP DLO using bulk API
-- "ingest_stream.py": Push the data from the S3 bucket to the Customer's CDP DLO using streaming API
+- "query.py": Query the data from customer's DLO (Data Lake object) and return pandas dataframe
+- "enrich.py": Take pandas dataframe, perform enrichment and return pandas frame
+- "ingest_bulk.py": Push the pandas dataframe to the Customer's CDP DLO using bulk API
+- "ingest_stream.py": Push the pandas dataframe to the Customer's CDP DLO using streaming API
 
-## Testing 
-> Follow this <a href="https://developer.salesforce.com/docs/atlas.en-us.c360a_api.meta/c360a_api/c360a_api_get_started.htm">doc</a> and setup 
-- Setup Ingestion API connector: defines the endpoint and payload to consume the data.
-- Create and Deploy Data Stream: configures ingestion jobs and exposes the API for external consumption.
-For the sample data stream, leverage the yaml athlete.file from data
-- Configure Connected App: enables external applications to integrate with Salesforce using OAuth.
-- Request Customer Data Platform access token from Salesforce OAuth Authorization Flows: implements OAuth dance to obtain and refresh access token required for making API requests.
-- Update test/ingest_test.py event parameter with the information from above step
-- For running test/ingest_test.py on local machine, install python3 and pandas libraries
+## Testing Pre-req
+- Create a new Ingestion API connector (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_connect_an_ingestion_source.htm&type=5"> developer doc</a>)   
+> From CDP setup -> Configuration->Ingestion API->Click New  
+Give it a name "External Lead". From the git repo's Config directory, upload lead.yaml as a schema 
+- Create a new connected app (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_create_ingestion_api_connected_app.htm&type=5"> developer doc</a>)  
+> From Setup -> Apps->Apps Manager
+Create a new data stream (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_create_ingestion_data_stream.htm&type=5"> developer doc</a>)   
+> From "Customer Data Platform" app, "Data Streams" tab, create a new data stream using the Ingestion API 
 
-> Run test/ingest_test.py from local machine which will call query, enrich, ingest_bulk functions. 
-> Run Lambda functions from AWS Lambda console 
+
 

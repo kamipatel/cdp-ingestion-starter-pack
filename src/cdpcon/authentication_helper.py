@@ -26,16 +26,12 @@ import socket
 import time
 from threading import Lock
 import random
-
 import requests
-
 
 def allowed_gai_family():
     return socket.AF_INET
 
-
 requests.packages.urllib3.util.connection.allowed_gai_family = allowed_gai_family
-
 
 class AuthenticationHelper:
 

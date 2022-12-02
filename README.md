@@ -21,12 +21,14 @@ This is not an official repo. It is just for the general guidance. AWS stack in 
 
 ## Pre-req
 > Create a new connected app (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_create_ingestion_api_connected_app.htm&type=5"> developer doc</a>)     
-From Setup -> Apps->Apps Manager->New Connected app  
-Note down client id and secret values
+- From Setup -> Apps->Apps Manager->New Connected app  
+- Note down client id and secret values
 > Create a new Ingestion API connector (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_connect_an_ingestion_source.htm&type=5"> developer doc</a>)   
-From CDP setup -> Configuration->Ingestion API->Click New  
-Give it a name "External Lead". From the git repo's Config directory, upload external_lead.yaml as a schema  
-> From "Customer Data Platform" app, "Data Streams" tab, create a new data stream using the above Ingestion API. Note down the dlo_object as shown 
+- From CDP setup -> Configuration->Ingestion API->Click New  
+- Give it a name "External Lead API". From the git repo's Config directory, upload external_lead.yaml as a schema  
+> From "Customer Data Platform" app-> "Data Streams" tab 
+- Create a new data stream using the above Ingestion API. 
+- Note down the value of the field "Object API Name" as dlo_object  
 
 ## Test using a python based notebook
 # Demo use-case
@@ -41,13 +43,13 @@ event['user_name'] = '' #cdp org's username
 event['password'] = '' #cdp org's password
 event['client_id'] = '' #cdp connected app clientid
 event['client_secret'] = '' #cdp connected app client secret
-event['dlo_source_name'] = 'External_Lead' #CDP org's Ingestion API source name 
+event['dlo_source_name'] = 'External_Lead_API' #CDP org's Ingestion API source name 
 event['dlo_name'] = 'External_Lead_Object' #CDP org's DLO name
-event['dlo_object'] = 'External_Lead_External_Lead_Obj_B54D2EEB__dll' #DLO object name to be queried
-event['dlo_filter'] = '' #Where clause for the query
+event['dlo_object'] = '' #DLO object name to be queried. Copy from Data stream's "Object API Name" field
+event['dlo_filter'] = '' #Where clause for the query. 
 event['bulk_operation_type'] = 'upsert' #Where clause for the query  
 
-- Run through each cell 
+- Run through each cell (it is self explanatory)
 
 > Option 2: Run the python function unser test/ingest_test.py after updating the event values
 

@@ -39,12 +39,12 @@ enrich the data using hard-coded logic -> push the enriched data back to the DLO
 - Update the event values in the notebook
 event = {}  
 event['login_url'] = 'https://login.salesforce.com'   
-event['user_name'] = '' #cdp org's username 
-event['password'] = '' #cdp org's password 
+event['user_name'] = '' #cdp org's username  
+event['password'] = '' #cdp org's password  
 event['client_id'] = '' #cdp connected app clientid  
-event['client_secret'] = '' #cdp connected app client secret 
+event['client_secret'] = '' #cdp connected app client secret  
 event['dlo_source_name'] = 'External_Lead_API' #CDP org's Ingestion API source name   
-event['dlo_name'] = 'External_Lead_Object' #CDP org's DLO name 
+event['dlo_name'] = 'External_Lead_Object' #CDP org's DLO name  
 event['dlo_object'] = '' #DLO object name to be queried. Copy from Data stream's "Object API Name" field  
 event['dlo_filter'] = '' #Where clause for the query.   
 event['bulk_operation_type'] = 'upsert' #Where clause for the query    

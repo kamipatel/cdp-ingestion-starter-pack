@@ -35,7 +35,7 @@ This is not an official repo. It is just for the general guidance. AWS stack in 
 - In the External_Lead DLO, create Leads using streaming API -> fetch the data using query API -> 
 enrich the data using hard-coded logic -> push the enriched data back to the DLO using bulk API
 
-> Option 1: Test the wrapper functions by duplicating the deepnote notebook  
+> Option 1: Test the wrapper functions by duplicating <a href="https://deepnote.com/workspace/cdp-ingestion-7ca28564-377d-440f-985c-fdf497ae5659/project/CDP-API-Playground-Public-e2197e5c-b0a2-41be-9887-86d626c3037d/%2Fcdp-ingestion-starter-pack-test-ingest-test-notebook.ipynb"> this deepnote notebook </a>   
 - Update the event values in the notebook
 event = {}  
 event['login_url'] = 'https://login.salesforce.com'   

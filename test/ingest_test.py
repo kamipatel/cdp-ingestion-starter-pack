@@ -7,9 +7,9 @@ import io
 # modify this to your local path
 sys.path.insert(0, '/Users/kamlesh.patel/kam/cdp/cdpisv/cdp_ingestion_starter_pack/src')
 
-from query import query_cdp_data as query
-from enrich import enrich_cdp_data as enrich
-from ingest_bulk import ingest_cdp_data_bulk as ingest_bulk
+from query import query_cdp_data 
+from enrich import enrich_cdp_data 
+from ingest_bulk import ingest_cdp_data_bulk 
 
 # Update this before running the test
 event = {}
@@ -26,6 +26,6 @@ event['dlo_object'] = 'athlete_api_athlete_profiles_E6B17A31__dll' #DLO object n
 event['dlo_filter'] = 'limit 100' #Where clause for the query
 event['bulk_operation_type'] = 'upsert' #Where clause for the query
 
-df = query(event)
-df = enrich(df)
-ingest_bulk(event,df)
+df = query_cdp_data(event)
+df = enrich_cdp_data(df)
+ingest_cdp_data_bulk(event,df)

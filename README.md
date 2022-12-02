@@ -32,8 +32,8 @@ This is not an official repo. It is just for the general guidance. AWS stack in 
 
 ## Test using a python based notebook
 > Demo use-case  
-In the External_Lead DLO, create Leads using streaming API => fetch the data using query API -> 
-enrich the data using hard-coded logic and push the enriched data back to the DLO using bulk API
+- In the External_Lead DLO, create Leads using streaming API -> fetch the data using query API -> 
+enrich the data using hard-coded logic -> push the enriched data back to the DLO using bulk API
 
 > Option 1: Test the wrapper functions by duplicating the deepnote notebook  
 - Update the event values in the notebook

@@ -126,11 +126,10 @@ class QuerySubmitter:
 
         headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
         QuerySubmitter.logger.debug("Submitting _post_ingest_stream for execution")
-        print("Submitting _post_ingest_stream for execution")
         start_time = timer()
         sql_response = QuerySubmitter.session.post(url=url, data=json_payload, headers=headers, verify=False)
         QuerySubmitter.logger.debug("_post_ingest_stream Submitted in %s", str(timedelta(seconds=timer() - start_time)))
-        print(sql_response.json())
+
         if sql_response.status_code != 202:
             try:
                 error_json = sql_response.json()
@@ -146,17 +145,14 @@ class QuerySubmitter:
 
         url = instance_url + '/api/v1/ingest/jobs'
         
-        print("posting job to url=" + url)
         json_payload = json.dumps(objinfo)
 
         start_time = timer()        
         
         headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
-        print("Starting bulk job for execution")        
                 
         sql_response = QuerySubmitter.session.post(url=url, data=json_payload, headers=headers, verify=False)
         QuerySubmitter.logger.debug("Job started in %s", str(timedelta(seconds=timer() - start_time)))
-        print(sql_response.json())
         '''
         {'object': 'athlete_profiles', 'id': 'cd186a64-e5ad-4af3-8ba2-7c59ddaa5fcb', 'operation': 'upsert', 'sourceName': 'athlete', 'createdById': '005R0000000J2cCIAS', 'createdDate': '2022-10-16T01:12:17.589480Z', 'systemModstamp': '2022-10-16T02:01:08.793Z', 'state': 'JobComplete', 'contentType': 'CSV', 'apiVersion': 'v1', 'contentUrl': '/api/v1/ingest/jobs/cd186a64-e5ad-4af3-8ba2-7c59ddaa5fcb/batches', 'retries': 0, 'totalProcessingTime': 51}
         '''
@@ -175,18 +171,14 @@ class QuerySubmitter:
 
     def _post_ingest_bulk_job_upload_data(instance_url, token, jobid, data, api_version='V2', enable_arrow_stream=False):
         url = instance_url + '/api/v1/ingest/jobs/' + jobid + '/batches'
-        print(url)
         start_time = timer()        
         
-        print("_post_ingest_bulk_job_upload_data called")
         data_payload = data.encode('ascii')           
-        print("after binary conversion")
 
         headers=headers = QuerySubmitter._get_headers_csv(token, enable_arrow_stream)
-        print("Got header csv")
         sql_response = QuerySubmitter.session.put(url=url, data=data_payload, headers=headers, verify=True)
         QuerySubmitter.logger.debug("Job data poosted %s", str(timedelta(seconds=timer() - start_time)))
-        print(sql_response.json())
+
         error_message = None
         if sql_response.status_code != 202:
             try:
@@ -200,7 +192,7 @@ class QuerySubmitter:
 
     def _patch_ingest_bulk_job_update_status(instance_url, token, jobid, data, api_version='V2', enable_arrow_stream=False, state='UploadComplete'):
         url = instance_url + '/api/v1/ingest/jobs/' + jobid
-        print(url)
+
         start_time = timer()        
         headers=headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
         data = {
@@ -209,7 +201,7 @@ class QuerySubmitter:
         data_payload = json.dumps(data)
         sql_response = QuerySubmitter.session.patch(url=url, data=data_payload, headers=headers, verify=True)
         QuerySubmitter.logger.debug("Job data posted %s", str(timedelta(seconds=timer() - start_time)))
-        print(sql_response.json())
+
         error_message = None
         if sql_response.status_code != 200:
             try:
@@ -223,7 +215,6 @@ class QuerySubmitter:
 
     def _get_ingest_bulk_jobs(instance_url, token, api_version='V2', enable_arrow_stream=False):
         url = instance_url + '/api/v1/ingest/jobs/'
-        print(f"Posting to {url}")
         start_time = timer()        
         headers=headers = QuerySubmitter._get_headers(token, enable_arrow_stream)
         sql_response = QuerySubmitter.session.get(url=url, data="", headers=headers, verify=True)

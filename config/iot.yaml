@@ -1,0 +1,21 @@
+openapi: 3.0.3
+components:
+  schemas:
+    realtime_data:
+      type: object
+      properties:
+        id:
+          type: string
+        created: 
+          type: string
+          format: date-time
+        vehicle_id:
+          type: string
+        battery_perf: 
+          type: number
+        battery_temp: 
+          type: number
+        airfilter_perf: 
+          type: number
+        tire_pressure: 
+          type: number

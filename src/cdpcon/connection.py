@@ -21,11 +21,9 @@ class SalesforceCDPConnection:
     This object represents a connection to CDP
     """
 
-    def __init__(self, login_url, username=None, password=None, client_id=None, client_secret=None,
+    def __init__(self, login_url, client_id=None, client_secret=None,
                  api=API_VERSION_V2, core_token=None, refresh_token=None, max_retries=MAX_RETRY_COUNT):
         self.login_url = login_url
-        self.username = username
-        self.password = password
         self.client_id = client_id
         self.client_secret = client_secret
         self.api = api
@@ -60,8 +58,6 @@ class SalesforceCDPConnection:
         :return: None
         """
         self.login_url = None
-        self.username = None
-        self.password = None
         self.client_id = None
         self.client_secret = None
         self.core_token = None

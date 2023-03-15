@@ -10,6 +10,7 @@ API_VERSION_V2 = "v2"
 
 AUTH_PARAM_GRANT_TYPE = 'grant_type'
 AUTH_PARAM_P_D = 'password'
+AUTH_PARAM_C_C = 'client_credentials'
 AUTH_PARAM_CLIENT_ID = 'client_id'
 AUTH_PARAM_CLIENT_SECRET = 'client_secret'
 AUTH_PARAM_USERNAME = 'username'

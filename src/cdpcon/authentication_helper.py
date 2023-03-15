@@ -5,6 +5,7 @@
 #  For full license text, see the LICENSE file in the repo root or https://opensource.org/licenses/BSD-3-Clause
 #
 from .constants import AUTH_PARAM_GRANT_TYPE
+from .constants import AUTH_PARAM_C_C
 from .constants import AUTH_PARAM_CDP_GRANT_TYPE
 from .constants import AUTH_PARAM_CDP_SUBJECT_TOKEN_TYPE
 from .constants import AUTH_PARAM_CDP_SUBJECT_TOKEN_TYPE_VALUE
@@ -46,7 +47,7 @@ class AuthenticationHelper:
     def get_token(self):
         """
         Retrieves the cdp token and instance url.
-        The connection should be having client_id, client_secret and either refresh token or username and password
+        The connection should be having client_id, client_secret and either refresh token
 
         :return: cdp token, instance_url
         """
@@ -64,7 +65,7 @@ class AuthenticationHelper:
     def _get_token(self):
         """
         Retrieves the cdp token and instance url. This method does is synchronized.
-        The connection should be having client_id, client_secret and either refresh token or username and password
+        The connection should be having client_id, client_secret and either refresh token
 
         :return: cdp token, instance_url
         """
@@ -83,10 +84,9 @@ class AuthenticationHelper:
 
                 return self._renew_token(self.connection.login_url, self.connection.refresh_token,
                                          self.connection.client_id, self.connection.client_secret)
-            elif self.connection.password is not None:
-                return self._token_by_un_pwd_flow(self.connection.login_url, self.connection.client_id,
-                                                  self.connection.client_secret, self.connection.username,
-                                                  self.connection.password)
+            elif self.connection.client_id is not None:
+                return self._token_by_client_credentials_flow(self.connection.login_url, self.connection.client_id,
+                                                  self.connection.client_secret)
             else:
                 raise Error('Sufficient information is not available for authentication')
         finally:
@@ -110,7 +110,7 @@ class AuthenticationHelper:
         current_time = datetime.now()
         access_code_res = self.session.post(url=login_url + '/services/a360/token', params=params)
         if access_code_res.status_code == 200:
-            access_code = access_code_res.json()
+            access_code = access_code_res.json()            
             access_token = access_code[AUTH_RESPONSE_ACCESS_TOKEN]
             expires_in_seconds = access_code[AUTH_RESPONSE_EXPIRES_IN]
             instance_url = access_code[AUTH_RESPONSE_INSTANCE_URL]
@@ -169,6 +169,25 @@ class AuthenticationHelper:
         params = {AUTH_PARAM_GRANT_TYPE: AUTH_PARAM_P_D, AUTH_PARAM_CLIENT_ID: client_id,
                   AUTH_PARAM_CLIENT_SECRET: client_secret,
                   AUTH_PARAM_USERNAME: username, AUTH_PARAM_P_D: password}
+        access_code_res = self.session.post(url=login_url + '/services/oauth2/token', params=params)
+        if access_code_res.status_code == 200:
+            access_code = access_code_res.json()
+            core_token = access_code[AUTH_RESPONSE_ACCESS_TOKEN]
+            org_url = access_code[AUTH_RESPONSE_INSTANCE_URL]
+            return self._exchange_token(org_url, core_token)
+        else:
+            raise Error('Core token retrieval failed with code %d' % access_code_res.status_code)
+
+    def _token_by_client_credentials_flow(self, login_url, client_id, client_secret):
+        """
+        This function fetches the core token
+        :param login_url: The Login URL for the tenant
+        :param client_id: The client id for the app
+        :param client_secret: The client secret for the app
+        :return: cdp_token, instance_url will be returned
+        """
+        params = {AUTH_PARAM_GRANT_TYPE: AUTH_PARAM_C_C, AUTH_PARAM_CLIENT_ID: client_id,
+                  AUTH_PARAM_CLIENT_SECRET: client_secret}
         access_code_res = self.session.post(url=login_url + '/services/oauth2/token', params=params)
         if access_code_res.status_code == 200:
             access_code = access_code_res.json()

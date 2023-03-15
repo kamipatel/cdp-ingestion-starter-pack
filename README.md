@@ -21,7 +21,10 @@ This is not an official repo. It is just for the general guidance. AWS stack in 
 
 ## Pre-req
 > Create a new connected app (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_create_ingestion_api_connected_app.htm&type=5"> developer doc</a>)     
+- Create a API only user
+- Add the API only user to "Customer Data Platform Admin" PSL
 - From Setup -> Apps->Apps Manager->New Connected app  
+- Make sure to use Client Credential Flow (<a href="https://help.salesforce.com/s/articleView?id=sf.connected_app_client_credentials_setup.htm&type=5"> setup doc</a>). Assign the API only user for the flow execution
 - Note down client id and secret values
 > Create a new Ingestion API connector (<a href="https://help.salesforce.com/s/articleView?id=sf.c360_a_connect_an_ingestion_source.htm&type=5"> developer doc</a>)   
 - From CDP setup -> Configuration->Ingestion API->Click New  

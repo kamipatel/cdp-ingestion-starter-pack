@@ -52,3 +52,4 @@ event['bulk_operation_type'] = 'upsert' #Where clause for the query
 - Run each cell (it is self explanatory) to see it working  
 > Option 2: Run the python function unser test/ingest_test.py after updating the event values
 
+

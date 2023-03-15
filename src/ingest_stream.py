@@ -18,8 +18,6 @@ def ingest_cdp_data_stream(event, json_data):
         ########## Step 1: Get the data ##########
         conn = SalesforceCDPConnection(
                 event['login_url'],
-                event['user_name'],
-                event['password'],
                 event['client_id'],
                 event['client_secret']
             )

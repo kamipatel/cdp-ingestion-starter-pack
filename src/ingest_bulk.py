@@ -17,8 +17,6 @@ def ingest_cdp_data_bulk(event, df):
         ########## Step 1: Get the data ##########
         conn = SalesforceCDPConnection(
                 event['login_url'],
-                event['user_name'],
-                event['password'],
                 event['client_id'],
                 event['client_secret']
             )
